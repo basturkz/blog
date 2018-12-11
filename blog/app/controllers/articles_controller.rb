@@ -5,6 +5,7 @@ class ArticlesController < ApplicationController
  
   def show
     @article = Article.find(params[:id])
+    @comments = Comment.where("article_id = ?", params[:id])
   end
  
   def new
@@ -17,6 +18,7 @@ class ArticlesController < ApplicationController
  
   def create
     @article = Article.new(article_params)
+    @article.user = current_user
  
     if @article.save
       redirect_to @article
